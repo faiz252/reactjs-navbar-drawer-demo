@@ -1,42 +1,40 @@
 import React, { Component } from 'react';
-
 import Toolbar from './components/Toolbar/Toolbar';
 import SideDrawer from './components/SideDrawer/SideDrawer';
 import Backdrop from './components/Backdrop/Backdrop';
 
 class App extends Component {
-  state = {
-    sideDrawerOpen: false
-  };
+    state = {
+        isSideDrawerOpen: false
+    };
 
-  drawerToggleClickHandler = () => {
-    this.setState((prevState) => {
-      return {sideDrawerOpen: !prevState.sideDrawerOpen};
-    });
-  };
+    handleDrawerToggleClick = () => {
+        this.setState((prevState) => {
+            return {isSideDrawerOpen: !prevState.isSideDrawerOpen};
+        });
+    };
 
-  backdropClickHandler = () => {
-    this.setState({sideDrawerOpen: false});
-  };
+    handleBackdropClick = () => {
+        this.setState({isSideDrawerOpen: false});
+    };
 
-  render() {
-    let backdrop;
+    render() {
+        let backdropElement;
 
-    if (this.state.sideDrawerOpen) {
-      backdrop = <Backdrop click={this.backdropClickHandler} />
+        if (this.state.isSideDrawerOpen) {
+            backdropElement = <Backdrop click={this.handleBackdropClick} />
+        }
+        return (
+            <div style={{height: '100%'}}>
+                <Toolbar drawerClickHandler={this.handleDrawerToggleClick} />
+                <SideDrawer show={this.state.isSideDrawerOpen} />
+                {backdropElement}
+                <main style={{marginTop: '64px'}}>
+                    <p>This is the page content!</p>
+                </main>
+            </div>
+        );
     }
-    return (
-      <div style={{height: '100%'}}>
-        <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
-        <SideDrawer show={this.state.sideDrawerOpen} />
-        {backdrop}
-        <main style={{marginTop: '64px'}}>
-          <p>This is the page content!</p>
-        </main>
-        
-      </div>
-    );
-  }
 }
 
 export default App;
