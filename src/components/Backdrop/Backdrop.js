@@ -1,9 +1,23 @@
 import React from 'react';
+import fs from 'fs';
 
 import './Backdrop.css';
 
-const backdrop = props => (
-    <div className="backdrop" onClick={props.click} />
-);
+let logStream = fs.createWriteStream("./debug.log", { flags: 'a' });
 
-export default backdrop;
+function logToFile(message) {
+    logStream.write(message + "\n");
+}
+
+const Backdrop = props => {
+    try {
+        return (
+            <div className="backdrop" onClick={props.onClickEvent} />
+        );
+    } catch (error) {
+        logToFile('Backdrop Error: ' + error)
+        throw error;
+    }
+};
+
+export default Backdrop;
