@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import MainApp from './MainApp';
+import registerAppServiceWorker from './registerAppServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+try {
+    ReactDOM.render(<MainApp />, document.getElementById('root'));
+    registerAppServiceWorker();
+} catch (error) {
+    console.log('Rendering Error: ' + error);
+    throw error;
+}
